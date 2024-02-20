@@ -194,7 +194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7675513}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06279683, y: -0.0000000042931068, z: 2.7012664e-10, w: 0.9980264}
+  m_LocalRotation: {x: 0.06279683, y: 0.000000004293104, z: -2.701265e-10, w: 0.9980264}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 399494684}
   - component: {fileID: 399494686}
   - component: {fileID: 399494687}
+  - component: {fileID: 399494688}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -384,10 +385,9 @@ MonoBehaviour:
   jumpForce: 5
   jumpCooldown: 0.5
   airMultiplier: 0.4
-  dashSpeed: 20
+  dashSpeed: 15
   dashSpeedChangeFactor: 50
-  dashForce: 20
-  dashCooldown: 2
+  maxYSpeed: 0
   jumpKey: 32
   dashKey: 304
   playerHeight: 2
@@ -396,11 +396,32 @@ MonoBehaviour:
     m_Bits: 64
   orientation: {fileID: 1237511445}
   playerCam: {fileID: 963194228}
+  state: 0
+  dashing: 0
+--- !u!114 &399494688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399494679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e6401dfd853de4683ea25159ecf048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 1237511445}
+  playerCam: {fileID: 963194228}
+  dashForce: 15
+  dashUpwardForce: 0
+  dashCooldown: 1.5
+  dashDuration: 3
+  maxDashYSpeed: 10
   useCameraFowrawd: 0
   allowAllDirections: 1
   disableGravity: 0
   resetVel: 1
-  state: 0
+  dashKey: 304
 --- !u!1 &587730765
 GameObject:
   m_ObjectHideFlags: 0
