@@ -13,13 +13,9 @@ public class MovementController : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     bool readytoJump = true;
-
     public float dashSpeed;
     public float dashSpeedChangeFactor;
-    public float dashForce;
-    public float dashCooldown;
-    bool readyToDash = true;
-    bool dashing;
+    public float maxYSpeed;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -36,18 +32,12 @@ public class MovementController : MonoBehaviour
     Vector3 movedirection;
     Rigidbody rb;
 
-    [Header("Settings")]
-    public bool useCameraFowrawd = true;
-    public bool allowAllDirections = true;
-    public bool disableGravity = false;
-    public bool resetVel = true;
-
     public MovementState state;
     public enum MovementState
     {
         dashing
     }
-
+    public bool dashing;
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
@@ -146,15 +136,12 @@ public class MovementController : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if(Input.GetKey(dashKey) && readyToDash) {
-            readyToDash = false;
-            Dash();
-            Invoke(nameof(ResetDash), dashCooldown);
-        }
     }
 
     private void MovePlayer()
     {
+        //if (state == MovementState.dashing) return;
+
         movedirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         //on ground
@@ -177,6 +164,10 @@ public class MovementController : MonoBehaviour
             Vector3 limitVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
         }
+
+        if(maxYSpeed != 0 && rb.velocity.y > maxYSpeed) {
+            rb.velocity = new Vector3(rb.velocity.x, maxYSpeed, rb.velocity.z);
+        }
     }
 
     private void Jump()
@@ -192,59 +183,4 @@ public class MovementController : MonoBehaviour
         readytoJump = true;
     }
 
-    private void Dash()
-    {
-        dashing = true;
-
-        Transform forwardT;
-
-        if(useCameraFowrawd) {
-            forwardT = playerCam;
-        }
-        else {
-            forwardT = orientation;
-        }
-
-        Vector3 direction = GetDirection(forwardT);
-
-        Vector3 forceToApply = direction * dashForce * 10f;
-        delayedForceToApply = forceToApply;
-        Invoke(nameof(DelayDashForce), 0.025f);
-    }
-
-    Vector3 delayedForceToApply;
-    private void DelayDashForce() 
-    {
-        if(resetVel) {
-            rb.velocity = Vector3.zero;
-        }
-        rb.AddForce(delayedForceToApply, ForceMode.Impulse);
-    }
-
-    private void ResetDash()
-    {
-        readyToDash = true;
-        dashing = false;
-    }
-    
-    private Vector3 GetDirection(Transform forwardT)
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        Vector3 direction = new Vector3();
-
-        if(allowAllDirections) {
-            direction = forwardT.forward * verticalInput + forwardT.right * horizontalInput;
-        }
-        else {
-            direction = forwardT.forward;
-        }
-
-        if(verticalInput == 0) {
-            direction = forwardT.forward;
-        }
-
-        return direction.normalized;
-    }
 }
