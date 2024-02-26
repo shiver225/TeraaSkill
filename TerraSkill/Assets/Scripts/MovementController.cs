@@ -130,7 +130,7 @@ public class MovementController : MonoBehaviour
         //jump check
         // Debug.Log("Jump: " + readytoJump);
         // Debug.Log("Ground: " + grounded);
-        if(Input.GetKey(jumpKey) && readytoJump && grounded) {
+        if(Input.GetKey(jumpKey) && readytoJump /*&& grounded*/) {
             readytoJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
