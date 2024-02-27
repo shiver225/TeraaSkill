@@ -196,8 +196,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
-  m_sharedMaterial: {fileID: -578231587747693931, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -598,31 +598,31 @@ MonoBehaviour:
     by the wise sage Elara, they embark on a perilous quest to restore light to their
     ravaged homeland.
 
-    
 
-    From the haunted forests of Whispering Grove to
-    the desolate ruins of Frostfall Citadel, the adventurer faces relentless challenges,
+
+    From the haunted forests of Whispering Grove to the
+    desolate ruins of Frostfall Citadel, the adventurer faces relentless challenges,
     growing stronger with each victory. Along the way, they gather allies and unlock
     ancient relics of power, preparing for the ultimate showdown with the darkness
     consuming TerraSkill.
 
-    
 
-    In a climactic battle against the malevolent
-    force, the hero defies fate and emerges victorious, bringing light back to the
-    kingdom. As the people rejoice, the legend of the adventurer of TerraSkill is
-    born, a beacon of hope for a world reborn.
+
+    In a climactic battle against the malevolent force,
+    the hero defies fate and emerges victorious, bringing light back to the kingdom.
+    As the people rejoice, the legend of the adventurer of TerraSkill is born, a
+    beacon of hope for a world reborn.
 
 
     Story by ChatGPT
 
 
 
-    Thanks
-    for playing <3'
+    Thanks for playing
+    <3'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
-  m_sharedMaterial: {fileID: -578231587747693931, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -984,8 +984,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: And now for the story to unfold...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
-  m_sharedMaterial: {fileID: -578231587747693931, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1565,8 +1565,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
-  m_sharedMaterial: {fileID: -578231587747693931, guid: dc96b607983471b4db729b1377b1ca55, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
