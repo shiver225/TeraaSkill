@@ -32,6 +32,13 @@ public class MovementController : MonoBehaviour
     Vector3 movedirection;
     Rigidbody rb;
 
+    [Header("Animator")]
+    public Animator playerAnim;
+    public Transform playerTrans;
+    public bool isMoving;
+    public bool isJumping;
+
+    [Header("States")]
     public MovementState state;
     public enum MovementState
     {
@@ -130,9 +137,13 @@ public class MovementController : MonoBehaviour
         //jump check
         // Debug.Log("Jump: " + readytoJump);
         // Debug.Log("Ground: " + grounded);
-        if(Input.GetKey(jumpKey) && readytoJump /*&& grounded*/) {
+        if(Input.GetKey(jumpKey) && readytoJump && grounded) {
             readytoJump = false;
+            playerAnim.SetTrigger("Jump");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Sprint");
             Jump();
+            isJumping = true;
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
@@ -143,6 +154,7 @@ public class MovementController : MonoBehaviour
         //if (state == MovementState.dashing) return;
 
         movedirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        isMoving = movedirection.magnitude > 0;
 
         //on ground
         if(grounded) {
@@ -152,6 +164,17 @@ public class MovementController : MonoBehaviour
         //in air
         else if(!grounded) {
             rb.AddForce(movedirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+
+        if(isMoving && grounded && !isJumping) {
+            playerAnim.SetTrigger("Sprint");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Jump");
+        }
+        else if(!isMoving && !isJumping) {
+            playerAnim.ResetTrigger("Sprint");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.SetTrigger("Idle");
         }
     }
 
@@ -181,6 +204,7 @@ public class MovementController : MonoBehaviour
     private void ResetJump()
     {
         readytoJump = true;
+        isJumping = false;
     }
 
 }
