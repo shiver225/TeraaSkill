@@ -194,7 +194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7675513}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06279683, y: 0.0000000042931068, z: -2.7012664e-10, w: 0.9980264}
+  m_LocalRotation: {x: 0.06279683, y: -0.0000000042931068, z: 2.7012664e-10, w: 0.9980264}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -589,7 +589,6 @@ GameObject:
   - component: {fileID: 399494681}
   - component: {fileID: 399494680}
   - component: {fileID: 399494684}
-  - component: {fileID: 399494686}
   - component: {fileID: 399494687}
   - component: {fileID: 399494689}
   m_Layer: 0
@@ -716,32 +715,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!143 &399494686
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399494679}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &399494687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,11 +730,11 @@ MonoBehaviour:
   moveSpeed: 7
   groundDrag: 4
   jumpForce: 10
-  jumpCooldown: 1.25
+  jumpCooldown: 1.3
   airMultiplier: 0.4
   walkSpeed: 7
   sprintSpeed: 12
-  crouchSpeed: 2
+  crouchSpeed: 3.5
   crouchYScale: 0.5
   dashSpeed: 25
   dashSpeedChangeFactor: 50
@@ -778,6 +751,7 @@ MonoBehaviour:
   grounded: 0
   orientation: {fileID: 1237511445}
   playerCam: {fileID: 963194228}
+  charTrans: {fileID: 1600214188}
   playerAnim: {fileID: 2110576565}
   playerTrans: {fileID: 399494683}
   isMoving: 0
@@ -3601,6 +3575,10 @@ PrefabInstance:
     - target: {fileID: -8799906846813901631, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -58.72369
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       propertyPath: m_LocalPosition.x

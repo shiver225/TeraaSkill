@@ -13,6 +13,8 @@ public class MovementController : MonoBehaviour
     public float moveSpeed;
     public float groundDrag;
 
+    public float timer;
+
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -58,6 +60,7 @@ public class MovementController : MonoBehaviour
     float verticalInput;
     Vector3 movedirection;
     Rigidbody rb;
+    public Transform charTrans;
 
     [Header("Animator")]
     public Animator playerAnim;
@@ -78,8 +81,14 @@ public class MovementController : MonoBehaviour
     
     private void StateHandler()
     {
+        // Mode - crouching
+        if(Input.GetKey(crouchKey)) {
+            state = MovementState.crouching;
+            desiredMoveSpeed = crouchSpeed;
+        }
+
         // Mode - Sprinting
-        if(grounded && Input.GetKey(sprintKey)) {
+        else if(grounded && Input.GetKey(sprintKey)) {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
         }
@@ -88,11 +97,6 @@ public class MovementController : MonoBehaviour
         else if(grounded) {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
-        }
-
-        else if(Input.GetKey(crouchKey)) {
-            state = MovementState.crouching;
-            desiredMoveSpeed = crouchSpeed;
         }
 
         // Mode - dashing
@@ -207,20 +211,29 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Sprint");
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Crouch");
+            playerAnim.ResetTrigger("Crouch_walking");
             isJumping = true;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // start crouch
-        if(Input.GetKeyDown(crouchKey)) {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        }
+        timer =+ Time.deltaTime;
 
-        //stop crouch
-        if(Input.GetKeyUp(crouchKey)) {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        // crouching
+        if(timer >= 0.9) {
+            // start crouch
+            if(Input.GetKeyDown(crouchKey)) {
+                transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+                charTrans.localScale = new Vector3(charTrans.localScale.x, startYScale * 2f, charTrans.localScale.z); 
+                rb.AddForce(Vector3.down * 10f, ForceMode.Impulse);
+            }
+
+            //stop crouch
+            if(Input.GetKeyUp(crouchKey)) {
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+                charTrans.localScale = new Vector3(charTrans.localScale.x, startYScale, charTrans.localScale.z);
+                timer = 0;
+            }
         }
     }
 
@@ -281,6 +294,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Jump");
             playerAnim.ResetTrigger("Sprint");
             playerAnim.ResetTrigger("Crouch");
+            playerAnim.ResetTrigger("Crouch_walking");
         }
 
         //sprint animation
@@ -290,9 +304,28 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Jump");
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Crouch");
+            playerAnim.ResetTrigger("Crouch_walking");
         }
 
         //crouch animation
+        else if(state == MovementState.crouching && !isMoving) {
+            playerAnim.SetTrigger("Crouch");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Sprint");
+            playerAnim.ResetTrigger("Run");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.ResetTrigger("Crouch_walking");
+        }
+
+        //crouch movement animations
+        else if(state == MovementState.crouching && isMoving) {
+            playerAnim.SetTrigger("Crouch_walking");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Sprint");
+            playerAnim.ResetTrigger("Run");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.ResetTrigger("Crouch");
+        }
 
         //idle animation
         else if(!isMoving && !isJumping) {
@@ -301,6 +334,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Sprint");
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Crouch");
+            playerAnim.ResetTrigger("Crouch_walking");
         }
     }
     
