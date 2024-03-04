@@ -25,8 +25,6 @@ public class DashScript : MonoBehaviour
     public bool disableGravity = false;
     public bool resetVel = true;
 
-    [Header("Keybinds")]
-    public KeyCode dashKey = KeyCode.LeftShift;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +35,7 @@ public class DashScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(dashKey)) {
+        if(Input.GetKeyDown(mc.dashKey)) {
             Dash();
         }
 

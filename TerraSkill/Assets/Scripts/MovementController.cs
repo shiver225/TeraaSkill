@@ -2,29 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEditorInternal;
 
 public class MovementController : MonoBehaviour
 {
 
-    [Header("Movement")]
+    [field: Header("Movement")]
     public float moveSpeed;
     public float groundDrag;
+
+    [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    bool readytoJump = true;
+    bool readyToJump;
+
+    [Header("Walking")]
+    public float walkSpeed;
+
+    [Header("Sprinting")]
+    public float sprintSpeed;
+
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchYScale;
+    private float startYScale;
+
+    [Header("Dashing")]
     public float dashSpeed;
     public float dashSpeedChangeFactor;
     public float maxYSpeed;
+    public bool dashing;
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+    private MovementState lastState;
+    private bool keepMomentum;
+
+    [Header("Slope handling")]
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode dashKey = KeyCode.LeftShift;
+    public KeyCode dashKey = KeyCode.E;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
     public Transform orientation;
     public Transform playerCam;
     float horizontalInput;
@@ -42,21 +69,47 @@ public class MovementController : MonoBehaviour
     public MovementState state;
     public enum MovementState
     {
+        walking,
+        sprinting,
+        crouching,
+        air,
         dashing
     }
-    public bool dashing;
-
-    private float desiredMoveSpeed;
-    private float lastDesiredMoveSpeed;
-    private MovementState lastState;
-    private bool keepMomentum;
+    
     private void StateHandler()
     {
+        // Mode - Sprinting
+        if(grounded && Input.GetKey(sprintKey)) {
+            state = MovementState.sprinting;
+            desiredMoveSpeed = sprintSpeed;
+        }
+
+        // Mode - walking
+        else if(grounded) {
+            state = MovementState.walking;
+            desiredMoveSpeed = walkSpeed;
+        }
+
+        else if(Input.GetKey(crouchKey)) {
+            state = MovementState.crouching;
+            desiredMoveSpeed = crouchSpeed;
+        }
+
         // Mode - dashing
-        if(dashing) {
+        else if(dashing) {
             state = MovementState.dashing;
             desiredMoveSpeed = dashSpeed;
             speedChangeFactor = dashSpeedChangeFactor;
+        }
+
+        // Mode - air
+        else {
+            state = MovementState.air;
+
+            if(desiredMoveSpeed < sprintSpeed)
+                desiredMoveSpeed = walkSpeed;
+            else
+                desiredMoveSpeed = sprintSpeed;
         }
 
         bool desiredMoveSpeedChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
@@ -76,6 +129,10 @@ public class MovementController : MonoBehaviour
         lastDesiredMoveSpeed = desiredMoveSpeed;
         lastState = state;
     }
+
+    [Header("Display")]
+    public TMP_Text stateText;
+    public TMP_Text speedText;
 
     private float speedChangeFactor;
 
@@ -99,11 +156,16 @@ public class MovementController : MonoBehaviour
         speedChangeFactor = 1f;
         keepMomentum = false;
     }
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        readyToJump = true;
+
+        startYScale = transform.localScale.y;
     }
 
     // Update is called once per frame
@@ -114,9 +176,12 @@ public class MovementController : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        StateHandler();
+        Display();
+        AnimationHandler();
 
         //handle drag
-        if(state != MovementState.dashing) {
+        if(state != MovementState.dashing && state != MovementState.air) {
             rb.drag = groundDrag;
         }
         else {
@@ -135,18 +200,28 @@ public class MovementController : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         //jump check
-        // Debug.Log("Jump: " + readytoJump);
-        // Debug.Log("Ground: " + grounded);
-        if(Input.GetKey(jumpKey) && readytoJump && grounded) {
-            readytoJump = false;
+        if(Input.GetKey(jumpKey) && readyToJump && grounded) {
+            readyToJump = false;
             playerAnim.SetTrigger("Jump");
             playerAnim.ResetTrigger("Idle");
             playerAnim.ResetTrigger("Sprint");
-            Jump();
+            playerAnim.ResetTrigger("Run");
+            playerAnim.ResetTrigger("Crouch");
             isJumping = true;
+            Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        // start crouch
+        if(Input.GetKeyDown(crouchKey)) {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+
+        //stop crouch
+        if(Input.GetKeyUp(crouchKey)) {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
     }
 
     private void MovePlayer()
@@ -164,17 +239,6 @@ public class MovementController : MonoBehaviour
         //in air
         else if(!grounded) {
             rb.AddForce(movedirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-        }
-
-        if(isMoving && grounded && !isJumping) {
-            playerAnim.SetTrigger("Sprint");
-            playerAnim.ResetTrigger("Idle");
-            playerAnim.ResetTrigger("Jump");
-        }
-        else if(!isMoving && !isJumping) {
-            playerAnim.ResetTrigger("Sprint");
-            playerAnim.ResetTrigger("Jump");
-            playerAnim.SetTrigger("Idle");
         }
     }
 
@@ -203,8 +267,47 @@ public class MovementController : MonoBehaviour
 
     private void ResetJump()
     {
-        readytoJump = true;
+        readyToJump = true;
         isJumping = false;
+    }
+
+    private void AnimationHandler()
+    {
+        //walk animation
+        if(isMoving && grounded && state == MovementState.walking && !isJumping)
+        {
+            playerAnim.SetTrigger("Run");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.ResetTrigger("Sprint");
+            playerAnim.ResetTrigger("Crouch");
+        }
+
+        //sprint animation
+        else if(isMoving && grounded && state == MovementState.sprinting && !isJumping) {
+            playerAnim.SetTrigger("Sprint");
+            playerAnim.ResetTrigger("Idle");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.ResetTrigger("Run");
+            playerAnim.ResetTrigger("Crouch");
+        }
+
+        //crouch animation
+
+        //idle animation
+        else if(!isMoving && !isJumping) {
+            playerAnim.SetTrigger("Idle");
+            playerAnim.ResetTrigger("Jump");
+            playerAnim.ResetTrigger("Sprint");
+            playerAnim.ResetTrigger("Run");
+            playerAnim.ResetTrigger("Crouch");
+        }
+    }
+    
+    private void Display() 
+    {
+        stateText.SetText("State: " + state.ToString());
+        speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
     }
 
 }
