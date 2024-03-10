@@ -370,9 +370,10 @@ public class MovementController : MonoBehaviour
     }
     
     private void Display() 
-    {   
-        stateText.SetText("State: " + state.ToString());
-        speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
+    {   if(stateText != null)
+            stateText.SetText("State: " + state.ToString());
+        if (speedText != null)
+            speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
     }
 
     private bool Onslope()

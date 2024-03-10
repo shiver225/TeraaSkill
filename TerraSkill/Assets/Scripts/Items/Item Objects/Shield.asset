@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ba4cda7889d9b4ebe1afd699b73306, type: 3}
-  m_Name: Fish
+  m_Script: {fileID: 11500000, guid: 673c75a3ea7bd06458f43ad04135519d, type: 3}
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  type: 0
-  description: zuvis va cia
-  restoreHealValue: 16
+  prefab: {fileID: 3016401796102767315, guid: 08e36e350494b4a49ab6665b9a2bf911, type: 3}
+  type: 1
+  description: skydas medinis
+  atkBonus: 1
+  defenceBonus: 10

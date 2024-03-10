@@ -70,3 +70,4 @@ TerraSkill/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 TerraSkill/[Aa]ssets/[Ss]treamingAssets/aa.meta
 TerraSkill/[Aa]ssets/[Ss]treamingAssets/aa/*
+TerraSkill/.vsconfig

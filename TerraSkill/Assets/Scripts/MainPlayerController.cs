@@ -14,7 +14,14 @@ public class MainPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inventory.SaveInventory();
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            inventory.LoadInventory();
+        }
     }
 
     public void OnTriggerEnter(Collider other)
@@ -25,5 +32,9 @@ public class MainPlayerController : MonoBehaviour
             inventory.AddItem(item.item, 1);
             Destroy(other.gameObject);
         }
+    }
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
     }
 }
