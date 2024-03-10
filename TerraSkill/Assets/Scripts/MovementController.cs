@@ -370,7 +370,7 @@ public class MovementController : MonoBehaviour
     }
     
     private void Display() 
-    {
+    {   
         stateText.SetText("State: " + state.ToString());
         speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
     }
