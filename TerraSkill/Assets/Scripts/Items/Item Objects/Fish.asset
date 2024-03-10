@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ba4cda7889d9b4ebe1afd699b73306, type: 3}
   m_Name: Fish
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3001864796214225191, guid: 9847045bbb016a54ead81eb68c9a6040, type: 3}
+  ID: 0
+  prefab: {fileID: 21300000, guid: af5a29f736c637b469d6169feaffaeff, type: 3}
   type: 0
   description: zuvis va cia
   restoreHealValue: 16

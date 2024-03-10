@@ -14,4 +14,125 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savePath: Assets/Save Files/Inventory.Save
   database: {fileID: 11400000, guid: c4f7dd18444b2a249a01a3a82925b6ec, type: 2}
-  Container: []
+  Container:
+    Items:
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0
+    - ID: -1
+      item:
+        Name: 
+        ID: 0
+      amount: 0

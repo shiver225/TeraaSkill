@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086f19803cb3cd449937f093415c23e5, type: 3}
   m_Name: Bones
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2081000266825861386, guid: 403a30698a5b6334cafb97a41478d043, type: 3}
+  ID: 0
+  prefab: {fileID: 21300000, guid: af5a29f736c637b469d6169feaffaeff, type: 3}
   type: 2
   description: kazkas miri cia

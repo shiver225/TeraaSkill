@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673c75a3ea7bd06458f43ad04135519d, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3016401796102767315, guid: 08e36e350494b4a49ab6665b9a2bf911, type: 3}
+  ID: 0
+  prefab: {fileID: 21300000, guid: af5a29f736c637b469d6169feaffaeff, type: 3}
   type: 1
   description: kardukas paprastas
   atkBonus: 10
