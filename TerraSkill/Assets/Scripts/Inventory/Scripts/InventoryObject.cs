@@ -21,7 +21,7 @@ public class InventoryObject : ScriptableObject
         for (int i = 0; i < Container.Items.Length; i++)
         {
             InventorySlot slot = Container.Items[i];
-            if (slot.item.ID == item.ID)
+            if (slot.item != null &&slot.item.ID == item.ID)
             {
                 slot.AddAmount(amount);
                 return;
