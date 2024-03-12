@@ -51,5 +51,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "TerraSkill.sln"
+    "dotnet.defaultSolution": "TerraSkill.sln",
+    "cSpell.words": [
+        "Rigidbody"
+    ]
 }
