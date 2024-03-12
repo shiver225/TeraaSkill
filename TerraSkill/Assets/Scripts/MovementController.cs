@@ -31,6 +31,8 @@ public class MovementController : MonoBehaviour
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
+    private bool isCrouching = false;
+    private bool stood = false;
 
     [Header("Dashing")]
     public float dashSpeed;
@@ -85,7 +87,7 @@ public class MovementController : MonoBehaviour
     private void StateHandler()
     {
         // Mode - crouching
-        if(Input.GetKey(crouchKey)) {
+        if(isCrouching) {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
@@ -220,22 +222,25 @@ public class MovementController : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        timer =+ Time.deltaTime;
-
+        timer += Time.deltaTime;
+        // TODO: fix crouch timer (crouch spam)
         // crouching
-        if(timer >= 0.9) {
+        if (timer >= 0.3 ) {
             // start crouch
             if(Input.GetKeyDown(crouchKey)) {
+                isCrouching = true;
                 transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
                 charTrans.localScale = new Vector3(charTrans.localScale.x, startYScale * 2f, charTrans.localScale.z); 
-                rb.AddForce(Vector3.down * 10f, ForceMode.Impulse);
+                rb.AddForce(Vector3.down * 100f, ForceMode.Impulse);
             }
 
             //stop crouch
             if(Input.GetKeyUp(crouchKey)) {
                 transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
                 charTrans.localScale = new Vector3(charTrans.localScale.x, startYScale, charTrans.localScale.z);
+                isCrouching = false;
                 timer = 0;
+                timer += Time.deltaTime;
             }
         }
     }
