@@ -11,7 +11,7 @@ public enum ItemType
 
 public abstract class ItemObject : ScriptableObject
 {
-    public int ID;
+    public int ID = -1;
     public Sprite prefab;
     public ItemType type;
     [TextArea(15,20)]
@@ -22,7 +22,7 @@ public abstract class ItemObject : ScriptableObject
 public class Item
 {
     public string Name;
-    public int ID;
+    public int ID = -1;
     public Item(ItemObject item)
     {
         Name = item.name;
