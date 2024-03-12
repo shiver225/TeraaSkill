@@ -13,255 +13,47 @@ MonoBehaviour:
   m_Name: PlayerEquipment
   m_EditorClassIdentifier: 
   savePath: 
-  database: {fileID: 0}
+  database: {fileID: 11400000, guid: c4f7dd18444b2a249a01a3a82925b6ec, type: 2}
   Container:
     Items:
-    - ID: -1
+    - AllowedItems: 01000000
+      parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
-    - ID: -1
+    - AllowedItems: 02000000
+      parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
-    - ID: -1
+    - AllowedItems: 04000000
+      parent: {fileID: 0}
+      ID: 1
+      item:
+        Name: First staff
+        ID: 1
+      amount: 1
+    - AllowedItems: 05000000
+      parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
-    - ID: -1
+    - AllowedItems: 03000000
+      parent: {fileID: 0}
+      ID: 2
       item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
-      item:
-        Name: 
-        ID: -1
-      amount: 0
-    - ID: -1
+        Name: First sword
+        ID: 2
+      amount: 1
+    - AllowedItems: 06000000
+      parent: {fileID: 0}
+      ID: -1
       item:
         Name: 
         ID: -1

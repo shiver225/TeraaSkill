@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 2
   prefab: {fileID: 21300000, guid: 31e3ab483f3f7b64bb9209578ba15122, type: 3}
-  type: 1
+  type: 6
   description: Primasis kardas
   atkBonus: 15
   defenceBonus: 0
