@@ -16,6 +16,10 @@ public abstract class ItemObject : ScriptableObject
     public ItemType type;
     [TextArea(15,20)]
     public string description;
+    public ItemObject()
+    {
+        ID = -1;
+    }
 }
 
 [System.Serializable]
@@ -27,5 +31,10 @@ public class Item
     {
         Name = item.name;
         ID = item.ID;
+    }
+    public Item()
+    {
+        Name = null;
+        ID = -1;
     }
 }

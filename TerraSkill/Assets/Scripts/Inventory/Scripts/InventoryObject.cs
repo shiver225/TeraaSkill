@@ -103,7 +103,7 @@ public class InventorySlot
     public InventorySlot()
     {
         amount = 0;
-        item = null;
+        item = new Item();
         ID = -1;
     }
     public void UpdateSlot(int _id, Item _item, int _amount)
@@ -121,5 +121,5 @@ public class InventorySlot
 [System.Serializable]
 public class Inventory
 {
-    public InventorySlot[] Items = new InventorySlot[24];
+    public InventorySlot[] Items = new InventorySlot[GlobalOptions.Inventory_SlotCount];
 }
