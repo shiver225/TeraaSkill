@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -69,7 +70,7 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Clear Inventory")]
     public void ClearInventory()
     {
-        Container = new Inventory();
+        Container.Clear();
     }
     public void MoveItem(InventorySlot item1, InventorySlot item2)
     {
@@ -91,6 +92,8 @@ public class InventoryObject : ScriptableObject
 [System.Serializable]
 public class InventorySlot
 {
+    public ItemType[] AllowedItems = new ItemType[0];
+    public UserInterface parent;
     public int ID = -1;
     public Item item;
     public int amount;
@@ -116,10 +119,28 @@ public class InventorySlot
     {
         amount += value;
     }
+    public bool CanPlaceInSlot(ItemObject item)
+    {
+        if (AllowedItems.Length <= 0)
+            return true;
+        for (int i = 0; i < AllowedItems.Length; i++)
+        {
+            if (item.type == AllowedItems[i])
+                return true;
+        }
+        return false;
+    }
 }
 
 [System.Serializable]
 public class Inventory
 {
     public InventorySlot[] Items = new InventorySlot[GlobalOptions.Inventory_SlotCount];
+    public void Clear()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].UpdateSlot(-1, new Item(), 0);
+        }
+    }
 }

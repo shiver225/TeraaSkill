@@ -6,6 +6,7 @@ public class MainPlayerController : MonoBehaviour
 {
     public InventoryObject inventory;
     public GameObject inventoryPanel;
+    public MouseItem mouseItem = new MouseItem();
     // Start is called before the first frame update
     void Start()
     {

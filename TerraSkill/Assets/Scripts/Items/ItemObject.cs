@@ -5,7 +5,12 @@ using UnityEngine;
 public enum ItemType
 {
     Food,
-    Equipment,
+    Helmet,
+    Chestplate,
+    Shield,
+    Leggings,
+    Boots,
+    Weapon,
     Default
 }
 
