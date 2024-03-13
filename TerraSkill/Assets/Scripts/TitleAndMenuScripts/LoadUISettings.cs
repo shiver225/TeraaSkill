@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -37,6 +38,8 @@ public class LoadUISettings : MonoBehaviour
         model.Volume = volume.value;
         model.CameraSensitivity = cammeraSensitivity.value;
         optionManager.UpdateSettings(model);
+        SceneManager.LoadScene(0);
+
     }
     public void OnTextChanged(TMP_InputField field)
     {
