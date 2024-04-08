@@ -12,47 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f2461009cb36049ba7ac14bbceec4a, type: 3}
   m_Name: PlayerEquipment
   m_EditorClassIdentifier: 
-  savePath: 
+  savePath: Assets/Save Files/InventoryEquipment.Save
   database: {fileID: 11400000, guid: c4f7dd18444b2a249a01a3a82925b6ec, type: 2}
   Container:
     Items:
     - AllowedItems: 01000000
-      parent: {fileID: 0}
       ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
     - AllowedItems: 02000000
-      parent: {fileID: 0}
       ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
     - AllowedItems: 04000000
-      parent: {fileID: 0}
-      ID: 1
+      ID: -1
       item:
-        Name: First staff
-        ID: 1
-      amount: 1
+        Name: 
+        ID: -1
+      amount: 0
     - AllowedItems: 05000000
-      parent: {fileID: 0}
+      ID: -1
+      item:
+        Name: 
+        ID: -1
+      amount: 0
+    - AllowedItems: 06000000
       ID: -1
       item:
         Name: 
         ID: -1
       amount: 0
     - AllowedItems: 03000000
-      parent: {fileID: 0}
-      ID: 2
-      item:
-        Name: First sword
-        ID: 2
-      amount: 1
-    - AllowedItems: 06000000
-      parent: {fileID: 0}
       ID: -1
       item:
         Name: 

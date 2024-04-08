@@ -93,6 +93,7 @@ public class InventoryObject : ScriptableObject
 public class InventorySlot
 {
     public ItemType[] AllowedItems = new ItemType[0];
+    [System.NonSerialized]
     public UserInterface parent;
     public int ID = -1;
     public Item item;

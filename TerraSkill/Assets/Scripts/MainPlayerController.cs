@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainPlayerController : MonoBehaviour
 {
     public InventoryObject inventory;
+    public InventoryObject inventoryEquipment;
     public GameObject inventoryPanel;
     public MouseItem mouseItem = new MouseItem();
     // Start is called before the first frame update
@@ -19,10 +20,12 @@ public class MainPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             inventory.SaveInventory();
+            inventoryEquipment.SaveInventory();
         }
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             inventory.LoadInventory();
+            inventoryEquipment.LoadInventory();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -44,5 +47,6 @@ public class MainPlayerController : MonoBehaviour
     private void OnApplicationQuit()
     {
         inventory.Container.Items = new InventorySlot[GlobalOptions.Inventory_SlotCount];
+        inventoryEquipment.ClearInventory();
     }
 }
