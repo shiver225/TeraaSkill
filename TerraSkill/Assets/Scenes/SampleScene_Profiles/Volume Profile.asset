@@ -18,10 +18,10 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 0.5
+    value: 0.66
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -50,7 +50,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0.25
   quality:
-    overrideState: 0
+    overrideState: 1
     value: 2
 --- !u!114 &-1859088525552248334
 MonoBehaviour:
@@ -136,10 +136,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 225
+    value: 130
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 20
 --- !u!114 &5165189700131719122
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -201,7 +201,7 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
-    overrideState: 0
+    overrideState: 1
     value: 0
   saturation:
     overrideState: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
     value: 0.5
   contrast:
     overrideState: 1
-    value: -5
+    value: 15
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -1496,8 +1496,8 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   preset:
-    overrideState: 0
-    value: 2
+    overrideState: 1
+    value: 3
   maximumIterationCount:
     overrideState: 0
     value: 16
@@ -1508,11 +1508,11 @@ MonoBehaviour:
     overrideState: 0
     value: 8
   maximumMarchDistance:
-    overrideState: 0
+    overrideState: 1
     value: 100
   distanceFade:
-    overrideState: 0
+    overrideState: 1
     value: 0.5
   vignette:
-    overrideState: 0
+    overrideState: 1
     value: 0.5

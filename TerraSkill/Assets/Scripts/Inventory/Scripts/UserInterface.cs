@@ -117,6 +117,7 @@ public abstract class UserInterface : MonoBehaviour
                     }
                 }
                     
+
             }
             catch
             {
@@ -138,6 +139,7 @@ public abstract class UserInterface : MonoBehaviour
                         if(player.mouseItem.item.parent.GetType() == typeof(StaticInterface))
                             EquipItem(getITemObject[itemDisplay[obj].ID],true);
                         
+
                         SpawnWeaponObject(weaponObject.phisicalItemObject);
                         break;
                     }
