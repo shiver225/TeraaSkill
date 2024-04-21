@@ -6820,11 +6820,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3341731749998149534, guid: 8acec83a81978dc4fad363c07ae34c8d, type: 3}
   m_PrefabInstance: {fileID: 1713635193}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< .merge_file_IIQZ3M
---- !u!1001 &1742546713
-=======
+
 --- !u!1001 &1730766853
->>>>>>> .merge_file_BKypa4
+
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -6838,17 +6836,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< .merge_file_IIQZ3M
-      value: 0.5589905
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.804
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.4805765
-=======
       value: 1.6125696
       objectReference: {fileID: 0}
     - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
@@ -6858,7 +6845,6 @@ PrefabInstance:
     - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
       propertyPath: m_LocalPosition.z
       value: 4.604849
->>>>>>> .merge_file_BKypa4
       objectReference: {fileID: 0}
     - target: {fileID: 4085982324002936072, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8415,8 +8401,4 @@ SceneRoots:
   - {fileID: 847846777}
   - {fileID: 2100409897}
   - {fileID: 1809667997}
-<<<<<<< .merge_file_IIQZ3M
-  - {fileID: 1742546713}
-=======
   - {fileID: 1730766853}
->>>>>>> .merge_file_BKypa4
