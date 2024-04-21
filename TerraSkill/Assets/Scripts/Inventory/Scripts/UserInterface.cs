@@ -94,24 +94,39 @@ public abstract class UserInterface : MonoBehaviour
 
         if (mouseHoverObj)
         {
-            if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
-                inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
+            try
+            {
+                if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
+                    inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
+            }
+            catch
+            {
+                Debug.LogWarning($"Iviko sistemini klaida perdedant item");
+                itemOnMouse.hoverItem = null;
+            }
         }
         else
         {
            
-            foreach (GameObject weaponObject in player.AllWeapons)
+            foreach (ItemObject weaponObject in player.database.Items)
             {
-                GroundItem groundItem = weaponObject.GetComponent<GroundItem>();
-
-                if (groundItem != null && itemDisplay[obj].item.ID == groundItem.item.ID)
+                if(weaponObject.phisicalItemObject != null)
                 {
-                    SpawnWeaponObject(weaponObject);
-                    break;
+                    GroundItem groundItem = weaponObject.phisicalItemObject.GetComponent<GroundItem>();
+
+                    if (groundItem != null && itemDisplay[obj].item.ID == groundItem.item.ID)
+                    {
+                        SpawnWeaponObject(weaponObject.phisicalItemObject);
+                        break;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"GroundItem script not found on {weaponObject.name}.");
+                    }
                 }
                 else
                 {
-                    Debug.LogWarning($"GroundItem script not found on {weaponObject.name}.");
+                    Debug.LogError($"ItemObject in method OnEndDrag does not have phisical gameobject assigned on {weaponObject.name}!!!");
                 }
             }
             inventory.RemoveItem(itemDisplay[obj].item);

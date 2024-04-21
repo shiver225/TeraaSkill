@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673c75a3ea7bd06458f43ad04135519d, type: 3}
   m_Name: First bow
   m_EditorClassIdentifier: 
-  ID: 2
+  ID: 0
   prefab: {fileID: 21300000, guid: 1e2ab4de145f5464c8a8e50d92fdfd4d, type: 3}
   type: 6
   description: Primasis lankas
+  phisicalItemObject: {fileID: 4179328513628998899, guid: a12bbc82a82f3b54d935cb491f245ecd, type: 3}
   atkBonus: 12
   defenceBonus: 0
