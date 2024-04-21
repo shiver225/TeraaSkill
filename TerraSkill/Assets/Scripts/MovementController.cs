@@ -9,23 +9,23 @@ using UnityEditorInternal;
 public class MovementController : MonoBehaviour
 {
 
-    [field: Header("Movement")]
-    public float moveSpeed;
-    public float groundDrag;
+     [Header("Movement")]
+    private float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
 
-    public float timer;
+    public float dashSpeed;
+    public float dashSpeedChangeFactor;
+
+    public float maxYSpeed;
+
+    public float groundDrag;
 
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
-
-    [Header("Walking")]
-    public float walkSpeed;
-
-    [Header("Sprinting")]
-    public float sprintSpeed;
 
     [Header("Crouching")]
     public float crouchSpeed;
@@ -34,18 +34,14 @@ public class MovementController : MonoBehaviour
     private bool isCrouching = false;
     private bool stood = false;
 
-    [Header("Dashing")]
-    public float dashSpeed;
-    public float dashSpeedChangeFactor;
-    public float maxYSpeed;
-    public bool dashing;
-    private float desiredMoveSpeed;
-    private float lastDesiredMoveSpeed;
-    private MovementState lastState;
-    private bool keepMomentum;
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    bool grounded;
 
-    [Header("Slope handling")]
+    [Header("Slope Handling")]
     public float maxSlopeAngle;
+    public float minSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
@@ -55,10 +51,12 @@ public class MovementController : MonoBehaviour
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
-    [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask whatIsGround;
-    public bool grounded;
+    [Header("Other")]
+    public bool dashing;
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+    private MovementState lastState;
+    private bool keepMomentum;
     public Transform orientation;
     public Transform playerCam;
     float horizontalInput;
@@ -66,6 +64,7 @@ public class MovementController : MonoBehaviour
     Vector3 movedirection;
     Rigidbody rb;
     public Transform charTrans;
+    public float timer;
 
     [Header("Animator")]
     public Animator playerAnim;
@@ -121,15 +120,18 @@ public class MovementController : MonoBehaviour
                 desiredMoveSpeed = sprintSpeed;
         }
 
-        bool desiredMoveSpeedChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
-        if(lastState == MovementState.dashing) keepMomentum = true;
+        bool desiredMoveSpeedHasChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
+        if (lastState == MovementState.dashing) keepMomentum = true;
 
-        if(desiredMoveSpeedChanged) {
-            if (keepMomentum) {
+        if (desiredMoveSpeedHasChanged)
+        {
+            if (keepMomentum)
+            {
                 StopAllCoroutines();
                 StartCoroutine(SmoothlyLerpMoveSpeed());
             }
-            else {
+            else
+            {
                 StopAllCoroutines();
                 moveSpeed = desiredMoveSpeed;
             }
@@ -144,16 +146,17 @@ public class MovementController : MonoBehaviour
     public TMP_Text speedText;
 
     private float speedChangeFactor;
-
     private IEnumerator SmoothlyLerpMoveSpeed()
     {
+        // smoothly lerp movementSpeed to desired value
         float time = 0;
         float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
         float startValue = moveSpeed;
 
         float boostFactor = speedChangeFactor;
 
-        while(time < difference) {
+        while (time < difference)
+        {
             moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
 
             time += Time.deltaTime * boostFactor;
@@ -180,7 +183,7 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ground check
+        // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
@@ -190,7 +193,7 @@ public class MovementController : MonoBehaviour
         AnimationHandler();
 
         //handle drag
-        if(state != MovementState.dashing && state != MovementState.air) {
+        if(state != MovementState.dashing && state != MovementState.air && grounded) {
             rb.drag = groundDrag;
         }
         else {
@@ -247,39 +250,36 @@ public class MovementController : MonoBehaviour
 
     private void MovePlayer()
     {
-        //if (state == MovementState.dashing) return;
+        if (state == MovementState.dashing) return;
 
         movedirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         isMoving = movedirection.magnitude > 0;
 
         //on slope
-        if(Onslope() && !exitingSlope) {
+        if(OnSlope() && !exitingSlope) {
             Debug.Log("On slope!");
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
 
-            if(rb.velocity.y > 0) {
-                rb.AddForce(Vector3.down * 120f, ForceMode.Force);
-            }
+            if (rb.velocity.y > 0)
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 
-        //on ground
-        if(grounded) {
+         // on ground
+        else if(grounded)
             rb.AddForce(movedirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
 
-        //in air
-        else if(!grounded) {
+        // in air
+        else if(!grounded)
             rb.AddForce(movedirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-        }
 
-        //gravity off on slope
-        rb.useGravity = !Onslope();
+        // turn gravity off while on slope
+        rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
     {
         //limit speed on slope
-        if(Onslope() && !exitingSlope) {
+        if(OnSlope() && !exitingSlope) {
             if(rb.velocity.magnitude > moveSpeed) {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
             }
@@ -290,9 +290,10 @@ public class MovementController : MonoBehaviour
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             //velocity limit
-            if(flatVel.magnitude > moveSpeed) {
-                Vector3 limitVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
 
             if(maxYSpeed != 0 && rb.velocity.y > maxYSpeed) {
@@ -381,11 +382,12 @@ public class MovementController : MonoBehaviour
             speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
     }
 
-    private bool Onslope()
+    private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.7f, whatIsGround)) {
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.5f))
+        {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
+            return angle >= minSlopeAngle && angle <= maxSlopeAngle && angle != 0;
         }
 
         return false;
@@ -394,6 +396,32 @@ public class MovementController : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(movedirection, slopeHit.normal).normalized;
+    }
+
+    public TextMeshProUGUI text_speed;
+    public TextMeshProUGUI text_ySpeed;
+    public TextMeshProUGUI text_mode;
+    private void TextStuff()
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        if (OnSlope())
+            text_speed.SetText("Speed: " + Round(rb.velocity.magnitude, 1) + " / " + Round(moveSpeed, 1));
+
+        else
+            text_speed.SetText("Speed: " + Round(flatVel.magnitude, 1) + " / " + Round(moveSpeed, 1));
+
+        //float yVel = rb.velocity.y;
+        //float yMax = maxYSpeed == 0 ? 0 : maxYSpeed;
+        //text_ySpeed.SetText("YSpeed: " + Round(yVel, 0) + " / " + yMax);
+
+        text_mode.SetText(state.ToString());
+    }
+
+    public static float Round(float value, int digits)
+    {
+        float mult = Mathf.Pow(10.0f, (float)digits);
+        return Mathf.Round(value * mult) / mult;
     }
 
 }

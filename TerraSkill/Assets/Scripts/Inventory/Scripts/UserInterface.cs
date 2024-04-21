@@ -94,12 +94,45 @@ public abstract class UserInterface : MonoBehaviour
 
         if (mouseHoverObj)
         {
-            if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
-                inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
+            try
+            {
+                if (mouseHoverItem.item == null)
+                    mouseHoverItem.item = new Item();
+
+                if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
+                    inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
+            }
+            catch
+            {
+                Debug.LogWarning($"Iviko sistemini klaida perdedant item");
+                itemOnMouse.hoverItem = null;
+            }
         }
         else
         {
-            //inventory.RemoveItem(itemDisplay[obj].item);
+           
+            foreach (ItemObject weaponObject in player.database.Items)
+            {
+                if(weaponObject.phisicalItemObject != null)
+                {
+                    GroundItem groundItem = weaponObject.phisicalItemObject.GetComponent<GroundItem>();
+
+                    if (groundItem != null && itemDisplay[obj].item.ID == groundItem.item.ID)
+                    {
+                        SpawnWeaponObject(weaponObject.phisicalItemObject);
+                        break;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"GroundItem script not found on {weaponObject.name}.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"ItemObject in method OnEndDrag does not have phisical gameobject assigned on {weaponObject.name}!!!");
+                }
+            }
+            inventory.RemoveItem(itemDisplay[obj].item);
         }
         Destroy(itemOnMouse.obj);
         itemOnMouse.item = null;
@@ -109,6 +142,30 @@ public abstract class UserInterface : MonoBehaviour
         if (player.mouseItem.obj != null)
         {
             player.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
+        }
+    }
+
+    private void SpawnWeaponObject(GameObject weaponObject)
+    {
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        Vector3 spawnPosition = playerObject.transform.position + new Vector3(0f, 1f, 0f);
+        GameObject newWeaponInstance = Instantiate(weaponObject);
+        newWeaponInstance.transform.position = spawnPosition;
+        newWeaponInstance.transform.rotation = Quaternion.identity;
+        var collider = newWeaponInstance.GetComponent<Collider>();
+        if(collider != null)
+        {
+            collider.enabled = false;
+            StartCoroutine(DelayEnableCollider(collider));
+        }
+    }
+    private IEnumerator DelayEnableCollider(Collider collider)
+    {
+        yield return new WaitForSeconds(2f);
+        if (collider != null)
+        {
+            collider.enabled = true;
         }
     }
 }

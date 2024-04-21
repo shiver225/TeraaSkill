@@ -21,6 +21,7 @@ public abstract class ItemObject : ScriptableObject
     public ItemType type;
     [TextArea(15,20)]
     public string description;
+    public GameObject phisicalItemObject;
     public ItemObject()
     {
         ID = -1;
