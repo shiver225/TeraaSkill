@@ -225,6 +225,12 @@ public class MovementController : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        //attack check
+        if (Input.GetMouseButtonDown(0) && (state == MovementState.walking || state == MovementState.sprinting || state == MovementState.crouching || state == MovementState.air))
+        {
+            playerAnim.SetTrigger("Attack");
+        }
+
         timer += Time.deltaTime;
         // TODO: fix crouch timer (crouch spam)
         // crouching
