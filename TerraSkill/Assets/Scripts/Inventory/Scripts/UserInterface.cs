@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
+using UnityEngine.XR;
 
 public abstract class UserInterface : MonoBehaviour
 {
@@ -100,7 +101,22 @@ public abstract class UserInterface : MonoBehaviour
                     mouseHoverItem.item = new Item();
 
                 if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
+                {
                     inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
+                    if(mouseHoverItem.parent.GetType() == typeof(StaticInterface))
+                    {
+                        EquipItem(getITemObject[mouseHoverItem.parent.itemDisplay[mouseHoverObj].ID]);
+                    }
+                    if(itemDisplay[obj].parent.GetType() == typeof(StaticInterface) &&
+                        mouseHoverItem.parent.itemDisplay[mouseHoverObj].parent.GetType() == typeof(DynamicInterface))
+                    {
+                        if(itemDisplay[obj].ID <= -1)
+                            EquipItem(getITemObject[mouseHoverItem.parent.itemDisplay[mouseHoverObj].ID],true);
+                        else
+                            EquipItem(getITemObject[itemDisplay[obj].ID]);
+                    }
+                }
+                    
             }
             catch
             {
@@ -119,6 +135,9 @@ public abstract class UserInterface : MonoBehaviour
 
                     if (groundItem != null && itemDisplay[obj].item.ID == groundItem.item.ID)
                     {
+                        if(player.mouseItem.item.parent.GetType() == typeof(StaticInterface))
+                            EquipItem(getITemObject[itemDisplay[obj].ID],true);
+                        
                         SpawnWeaponObject(weaponObject.phisicalItemObject);
                         break;
                     }
@@ -167,6 +186,74 @@ public abstract class UserInterface : MonoBehaviour
         {
             collider.enabled = true;
         }
+    }
+    private void EquipItem(ItemObject item, bool onlyClear = false)
+    {
+        Transform hand = null;
+        if (item.type == ItemType.Weapon)
+        {
+            hand = FindInPlayer("RHandWrapper");
+            
+        }
+        if(item.type == ItemType.Shield)
+        {
+            hand = FindInPlayer("LHandWrapper");
+        }
+
+        if (onlyClear && item != null)
+        {
+            ClearAndDestroyChildren(hand);
+            return;
+        }
+
+
+        if (hand != null)
+        {
+            ClearAndDestroyChildren(hand);
+            GameObject newObj = Instantiate<GameObject>(item.phisicalItemObject);
+            Collider col = newObj.GetComponent<Collider>();
+            col.enabled = false;
+
+            newObj.transform.parent = hand;
+            newObj.transform.localPosition = Vector3.zero;
+            newObj.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            Debug.LogError("Error trying to find hand while trying to equip item!!!");
+        }
+
+
+    }
+    private void ClearAndDestroyChildren(Transform parent)
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parent.GetChild(i);
+            ClearAndDestroyChildren(child);
+            Destroy(child.gameObject);
+        }
+    }
+    private Transform FindInPlayer(string name)
+    {
+        return  FindDeepChild(player.transform, name);
+    }
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        Transform result = parent.Find(name);
+        if (result != null)
+        {
+            return result; 
+        }
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
     }
 }
 public class MouseItem
