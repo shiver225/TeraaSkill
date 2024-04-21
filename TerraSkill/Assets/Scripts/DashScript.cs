@@ -1,100 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class DashScript : MonoBehaviour
+public class Dashing : MonoBehaviour
 {
     [Header("References")]
     public Transform orientation;
     public Transform playerCam;
     private Rigidbody rb;
-    private MovementController mc;
+    private MovementController pm;
 
     [Header("Dashing")]
     public float dashForce;
     public float dashUpwardForce;
-    public float dashCooldown;
-    private float dashCooldownTimer;
-    public float dashDuration;
     public float maxDashYSpeed;
+    public float dashDuration;
 
     [Header("Settings")]
-    public bool useCameraFowrawd = true;
+    public bool useCameraForward = true;
     public bool allowAllDirections = true;
     public bool disableGravity = false;
     public bool resetVel = true;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("Cooldown")]
+    public float dashCd;
+    private float dashCdTimer;
+
+    [Header("Input")]
+    public KeyCode dashKey = KeyCode.E;
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        mc = GetComponent<MovementController>();
+        pm = GetComponent<MovementController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(mc.dashKey)) {
+        if (Input.GetKeyDown(dashKey))
             Dash();
-        }
 
-        if(dashCooldownTimer > 0) {
-            dashCooldownTimer -= Time.deltaTime;
-        }
+        if (dashCdTimer > 0)
+            dashCdTimer -= Time.deltaTime;
     }
 
     private void Dash()
     {
-        if(dashCooldownTimer > 0) return;
-        else dashCooldownTimer = dashCooldown;
+        if (dashCdTimer > 0) return;
+        else dashCdTimer = dashCd;
 
-
-        mc.dashing = true;
-        mc.maxYSpeed = maxDashYSpeed;
+        pm.dashing = true;
+        pm.maxYSpeed = maxDashYSpeed;
 
         Transform forwardT;
 
-        if(useCameraFowrawd) {
-            forwardT = playerCam;
-        }
-        else {
-            forwardT = orientation;
-        }
+        if (useCameraForward)
+            forwardT = playerCam; /// where you're looking
+        else
+            forwardT = orientation; /// where you're facing (no up or down)
 
         Vector3 direction = GetDirection(forwardT);
 
-        Vector3 forceToApply = direction * dashForce * 10f + orientation.up * dashUpwardForce;
-        
-        if(disableGravity) {
+        Vector3 forceToApply = direction * dashForce + orientation.up * dashUpwardForce;
+
+        if (disableGravity)
             rb.useGravity = false;
-        }
 
         delayedForceToApply = forceToApply;
-        Invoke(nameof(DelayDashForce), 0.025f);
+        Invoke(nameof(DelayedDashForce), 0.025f);
 
         Invoke(nameof(ResetDash), dashDuration);
     }
 
-    Vector3 delayedForceToApply;
-    private void DelayDashForce() 
+    private Vector3 delayedForceToApply;
+    private void DelayedDashForce()
     {
-        if(resetVel) {
+        if (resetVel)
             rb.velocity = Vector3.zero;
-        }
+
         rb.AddForce(delayedForceToApply, ForceMode.Impulse);
     }
 
     private void ResetDash()
     {
-        mc.dashing = false;
-        mc.maxYSpeed = 0;
+        pm.dashing = false;
+        pm.maxYSpeed = 0;
 
-        if(disableGravity) {
+        if (disableGravity)
             rb.useGravity = true;
-        }
     }
-    
+
     private Vector3 GetDirection(Transform forwardT)
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -102,16 +97,13 @@ public class DashScript : MonoBehaviour
 
         Vector3 direction = new Vector3();
 
-        if(allowAllDirections) {
+        if (allowAllDirections)
             direction = forwardT.forward * verticalInput + forwardT.right * horizontalInput;
-        }
-        else {
+        else
             direction = forwardT.forward;
-        }
 
-        if(verticalInput == 0 && horizontalInput == 0) {
+        if (verticalInput == 0 && horizontalInput == 0)
             direction = forwardT.forward;
-        }
 
         return direction.normalized;
     }
