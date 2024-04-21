@@ -7,6 +7,7 @@ public class ChestColiderScript : MonoBehaviour
 {
     public Animator chestAnim;
     public ChestState State;
+    private Collider currentColider;
     public void Awake()
     {
         State = ChestState.New;
@@ -17,11 +18,16 @@ public class ChestColiderScript : MonoBehaviour
         Opened,
         Locked
     }
+    private void Update()
+    {
+        OnTriggerStay(currentColider);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "Player")
         {
             MainPlayerController controler = other.gameObject.GetComponent<MainPlayerController>();
+            currentColider = other;
             if (State == ChestState.New)
             {
                 controler.SetActionText("Open chest?");
@@ -31,7 +37,7 @@ public class ChestColiderScript : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.name == "Player" && Input.GetKeyDown(KeyCode.G))
+        if (other != null && other.gameObject.name == "Player" && Input.GetKeyDown(KeyCode.G))
         {
             MainPlayerController controler = other.gameObject.GetComponent<MainPlayerController>();
             if (State == ChestState.New)
@@ -60,6 +66,7 @@ public class ChestColiderScript : MonoBehaviour
             controler.SetActionText("-");
             controler.ActionPanelDisplay(false);
         }
+        currentColider = null;
     }
     public void OpenChest(MainPlayerController controller)
     {
