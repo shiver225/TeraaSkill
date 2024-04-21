@@ -41,6 +41,7 @@ public class MovementController : MonoBehaviour
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
+    public float minSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
@@ -255,7 +256,7 @@ public class MovementController : MonoBehaviour
         isMoving = movedirection.magnitude > 0;
 
         //on slope
-        if(Onslope() && !exitingSlope) {
+        if(OnSlope() && !exitingSlope) {
             Debug.Log("On slope!");
             rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
 
@@ -272,13 +273,13 @@ public class MovementController : MonoBehaviour
             rb.AddForce(movedirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
-        rb.useGravity = !Onslope();
+        rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
     {
         //limit speed on slope
-        if(Onslope() && !exitingSlope) {
+        if(OnSlope() && !exitingSlope) {
             if(rb.velocity.magnitude > moveSpeed) {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
             }
@@ -381,12 +382,12 @@ public class MovementController : MonoBehaviour
             speedText.SetText("Speed: " + desiredMoveSpeed.ToString());
     }
 
-    private bool Onslope()
+    private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.5f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
+            return angle >= minSlopeAngle && angle <= maxSlopeAngle && angle != 0;
         }
 
         return false;
@@ -404,7 +405,7 @@ public class MovementController : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        if (Onslope())
+        if (OnSlope())
             text_speed.SetText("Speed: " + Round(rb.velocity.magnitude, 1) + " / " + Round(moveSpeed, 1));
 
         else
