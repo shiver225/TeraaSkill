@@ -16,6 +16,6 @@ MonoBehaviour:
   prefab: {fileID: 21300000, guid: 2e053ae1276406e4c9e6196418416ea2, type: 3}
   type: 3
   description: 
-  phisicalItemObject: {fileID: 3746858460034633650, guid: 4bd52177ab9db0a4f840dbb3dae20693, type: 3}
+  phisicalItemObject: {fileID: 3746858460034633650, guid: 55c11253477c9bb418ec8cfbcf6a83d6, type: 3}
   atkBonus: 0
   defenceBonus: 0
