@@ -99,7 +99,22 @@ public abstract class UserInterface : MonoBehaviour
         }
         else
         {
-            //inventory.RemoveItem(itemDisplay[obj].item);
+           
+            foreach (GameObject weaponObject in player.AllWeapons)
+            {
+                GroundItem groundItem = weaponObject.GetComponent<GroundItem>();
+
+                if (groundItem != null && itemDisplay[obj].item.ID == groundItem.item.ID)
+                {
+                    SpawnWeaponObject(weaponObject);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning($"GroundItem script not found on {weaponObject.name}.");
+                }
+            }
+            inventory.RemoveItem(itemDisplay[obj].item);
         }
         Destroy(itemOnMouse.obj);
         itemOnMouse.item = null;
@@ -109,6 +124,30 @@ public abstract class UserInterface : MonoBehaviour
         if (player.mouseItem.obj != null)
         {
             player.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
+        }
+    }
+
+    private void SpawnWeaponObject(GameObject weaponObject)
+    {
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        Vector3 spawnPosition = playerObject.transform.position + new Vector3(0f, 1f, 0f);
+        GameObject newWeaponInstance = Instantiate(weaponObject);
+        newWeaponInstance.transform.position = spawnPosition;
+        newWeaponInstance.transform.rotation = Quaternion.identity;
+        var collider = newWeaponInstance.GetComponent<Collider>();
+        if(collider != null)
+        {
+            collider.enabled = false;
+            StartCoroutine(DelayEnableCollider(collider));
+        }
+    }
+    private IEnumerator DelayEnableCollider(Collider collider)
+    {
+        yield return new WaitForSeconds(2f);
+        if (collider != null)
+        {
+            collider.enabled = true;
         }
     }
 }
