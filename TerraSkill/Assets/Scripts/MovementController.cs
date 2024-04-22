@@ -32,7 +32,6 @@ public class MovementController : MonoBehaviour
     public float crouchYScale;
     private float startYScale;
     private bool isCrouching = false;
-    private bool stood = false;
 
     [Header("Ground Check")]
     public float playerHeight;

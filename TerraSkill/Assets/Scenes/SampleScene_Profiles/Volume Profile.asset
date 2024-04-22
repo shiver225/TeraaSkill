@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.66
+    value: 0.65
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -51,7 +51,7 @@ MonoBehaviour:
     value: 0.25
   quality:
     overrideState: 1
-    value: 2
+    value: 0
 --- !u!114 &-1859088525552248334
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -70,25 +70,25 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 0.1
   threshold:
     overrideState: 1
-    value: 0.8
+    value: 0.5
   softKnee:
     overrideState: 1
-    value: 0.35
+    value: 1
   clamp:
-    overrideState: 0
-    value: 65472
+    overrideState: 1
+    value: 65473.44
   diffusion:
-    overrideState: 0
-    value: 7
+    overrideState: 1
+    value: 8
   anamorphicRatio:
     overrideState: 0
     value: 0
   color:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 0.9559735, g: 0.9559735, b: 0.9559735, a: 1}
   fastMode:
     overrideState: 1
     value: 1
@@ -136,10 +136,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 130
+    value: 60
   sampleCount:
     overrideState: 1
-    value: 20
+    value: 15
 --- !u!114 &5165189700131719122
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -204,8 +204,8 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 20
   brightness:
     overrideState: 0
     value: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
     value: 0.5
   contrast:
     overrideState: 1
-    value: 15
+    value: 5
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -1469,7 +1469,7 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 10
+    value: 8
   aperture:
     overrideState: 1
     value: 2.5
@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a34fa72bd4185749832024e9c8010bf, type: 3}
   m_Name: ScreenSpaceReflections
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
