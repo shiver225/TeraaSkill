@@ -8,7 +8,6 @@ public class EnemyScript : MonoBehaviour
     public Transform player;
     public NavMeshAgent agent;
     Animator animator;
-    float health = 3;
     float timePassed;
     float attackCooldown = 2f;
     float attackRange = 1f;

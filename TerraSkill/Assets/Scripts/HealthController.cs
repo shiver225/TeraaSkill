@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
+    [Header("Particles")]
+    public ParticleSystem deathParticle;
     public float maxHealth = 100f;
     public float currentHealth;
 
     [SerializeField] FloatingHealthBar healthBar;
+
+    public Vector3 offset;
 
     private void Awake()
     {
@@ -32,5 +36,7 @@ public class HealthController : MonoBehaviour
     void Die()
     {
         Debug.Log("Enemy died");
+        Instantiate(deathParticle, transform.position + offset, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
