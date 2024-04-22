@@ -18,7 +18,7 @@ public class SwordCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             isAttacking = true;
-            animator.SetTrigger("Attack");
+            //animator.SetTrigger("Attack");
             PerformAttack();
         }
     }
