@@ -10,7 +10,7 @@ public class EnemyScript : MonoBehaviour
     Animator animator;
     float timePassed;
     float attackCooldown = 2f;
-    float attackRange = 1f;
+    float attackRange = 1.6f;
     float spottingRange = 8f;
     float newDestinationCooldown = 0.5f;
 
@@ -28,6 +28,8 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         animator.SetFloat("speed", agent.velocity.magnitude / agent.speed);
         if(timePassed >= attackCooldown)
         {
@@ -47,6 +49,7 @@ public class EnemyScript : MonoBehaviour
         }
         newDestinationCooldown -= Time.deltaTime;
         transform.LookAt(player);
+        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
     }
 
     void PerformAttack()

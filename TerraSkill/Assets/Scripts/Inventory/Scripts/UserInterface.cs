@@ -100,7 +100,8 @@ public abstract class UserInterface : MonoBehaviour
                 if (mouseHoverItem.item == null)
                     mouseHoverItem.item = new Item();
 
-                if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
+                if (mouseHoverItem.CanPlaceInSlot(getITemObject[itemDisplay[obj].ID]) && 
+                    (mouseHoverItem.item.ID <= -1 || (mouseHoverItem.item.ID >= 0 && itemDisplay[obj].CanPlaceInSlot(getITemObject[mouseHoverItem.item.ID]))))
                 {
                     inventory.MoveItem(itemDisplay[obj], mouseHoverItem.parent.itemDisplay[mouseHoverObj]);
                     if(mouseHoverItem.parent.GetType() == typeof(StaticInterface))
@@ -116,14 +117,9 @@ public abstract class UserInterface : MonoBehaviour
                             EquipItem(getITemObject[itemDisplay[obj].ID]);
                     }
                 }
-                    
-
             }
             catch
-            {
-                Debug.LogWarning($"Iviko sistemini klaida perdedant item");
-                itemOnMouse.hoverItem = null;
-            }
+            {Debug.LogWarning($"Iviko sistemini klaida perdedant item");itemOnMouse.hoverItem = null;}
         }
         else
         {

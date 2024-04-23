@@ -25,15 +25,21 @@ public class SwordCombat : MonoBehaviour
 
     void PerformAttack()
     {
-        // Perform damage check
+        // Perform raycast to detect hit objects within attack range and hitLayers
         RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, range, hitLayers);
+
         foreach (RaycastHit hit in hits)
         {
-            // Deal damage to the collided object if it has a collider
-            if (hit.collider != null)
+            // Get the GameObject of the collider hit by the raycast
+            GameObject hitObject = hit.collider.gameObject;
+
+            // Check if the hit object has a HealthController component
+            HealthController healthController = hitObject.GetComponent<HealthController>();
+
+            if (healthController != null)
             {
-                // Apply damage directly to the object
-                ApplyDamage(hit.collider.gameObject);
+                // Apply damage to the object with HealthController (e.g., player or enemy)
+                healthController.TakeDamage(damage);
             }
         }
 
@@ -49,10 +55,12 @@ public class SwordCombat : MonoBehaviour
     void ApplyDamage(GameObject obj)
     {
         // Check if the object has a HealthController component and apply damage if it does
-        health = obj.GetComponent<HealthController>();
-        if (health != null)
+        HealthController healthController = obj.GetComponent<HealthController>();
+
+        if (healthController != null)
         {
-            health.TakeDamage(damage);
+            // Apply damage to the object with HealthController (e.g., player or enemy)
+            healthController.TakeDamage(damage);
         }
     }
 }
