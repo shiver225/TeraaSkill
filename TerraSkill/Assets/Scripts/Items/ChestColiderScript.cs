@@ -37,7 +37,7 @@ public class ChestColiderScript : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other != null && other.gameObject.name == "Player" && Input.GetKeyDown(KeyCode.G))
+        if (other != null && other.gameObject.name == "Player" && Input.GetKeyDown(KeyCode.F))
         {
             MainPlayerController controler = other.gameObject.GetComponent<MainPlayerController>();
             if (State == ChestState.New)
