@@ -6,6 +6,7 @@ using UnityEngine;
 public class EquipmentObject : ItemObject
 {
     public float atkBonus;
+    public float range;
     public float defenceBonus;
     public void Awake()
     {

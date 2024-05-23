@@ -18,4 +18,5 @@ MonoBehaviour:
   description: Primasis kardas
   phisicalItemObject: {fileID: 2741701461228513837, guid: 1cb86858c88ba8e449a9666360426f9e, type: 3}
   atkBonus: 15
+  range: 2.8
   defenceBonus: 0

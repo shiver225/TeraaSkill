@@ -219,6 +219,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Crouch");
             playerAnim.ResetTrigger("Crouch_walking");
+            playerAnim.ResetTrigger("Attack");
             isJumping = true;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
@@ -337,6 +338,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Sprint");
             playerAnim.ResetTrigger("Crouch");
             playerAnim.ResetTrigger("Crouch_walking");
+            playerAnim.ResetTrigger("Attack");
         }
 
         //sprint animation
@@ -347,6 +349,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Crouch");
             playerAnim.ResetTrigger("Crouch_walking");
+            playerAnim.ResetTrigger("Attack");
         }
 
         //crouch animation
@@ -357,6 +360,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Jump");
             playerAnim.ResetTrigger("Crouch_walking");
+            playerAnim.ResetTrigger("Attack");
         }
 
         //crouch movement animations
@@ -367,6 +371,7 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Run");
             playerAnim.ResetTrigger("Jump");
             playerAnim.ResetTrigger("Crouch");
+            playerAnim.ResetTrigger("Attack");
         }
 
         //idle animation
@@ -378,6 +383,10 @@ public class MovementController : MonoBehaviour
             playerAnim.ResetTrigger("Crouch");
             playerAnim.ResetTrigger("Crouch_walking");
         }
+
+        //TODO: Set up running + attack animation
+        //TODO: Set up crouching + attack animation
+        //TODO: Set up jumping + attack animation
     }
     
     private void Display() 
