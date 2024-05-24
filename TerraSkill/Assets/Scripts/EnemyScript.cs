@@ -28,8 +28,6 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         animator.SetFloat("speed", agent.velocity.magnitude / agent.speed);
         if(timePassed >= attackCooldown)
         {

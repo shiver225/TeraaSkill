@@ -28,6 +28,7 @@ public class PlayerHealthContoller : MonoBehaviour
         {
             currentHealth += regenerationRate * Time.deltaTime;
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
         }
     }
 

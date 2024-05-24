@@ -8,17 +8,23 @@ public class HealthController : MonoBehaviour
     public ParticleSystem deathParticle;
     public float maxHealth = 100f;
     public float currentHealth;
-
+    public bool dead = false;
+    public int gainedExp = 40;
     [SerializeField] FloatingHealthBar healthBar;
+    [SerializeField] ExpController controller;
+    [SerializeField] PlayerExpBar expBar;
 
     public Vector3 offset;
 
     private void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthBar>();
+        controller = FindObjectOfType<ExpController>();
+        expBar = FindObjectOfType<PlayerExpBar>();
     }
     void Start()
     {
+        //expBar = GetComponent<MainPlayerController>().inventoryPanel.gameObject.transform.parent.GetComponentInChildren<PlayerExpBar>();
         currentHealth = maxHealth;
         healthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
@@ -35,6 +41,9 @@ public class HealthController : MonoBehaviour
 
     void Die()
     {
+        dead = true;
+        Debug.Log(controller.currentExp);
+        controller.currentExp = expBar.UpdateExpBar(controller.currentExp, gainedExp);
         Debug.Log("Enemy died");
         Instantiate(deathParticle, transform.position + offset, Quaternion.identity);
         Destroy(gameObject);
