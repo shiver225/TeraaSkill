@@ -682,6 +682,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 8436670737373055640}
+  attack: 25
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &8436670737373055640
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -719,7 +723,11 @@ MonoBehaviour:
   deathParticle: {fileID: 8014339420793386874, guid: 6b2901580ba842a49b282d45ab5bf7b6, type: 3}
   maxHealth: 100
   currentHealth: 0
+  dead: 0
+  gainedExp: 20
   healthBar: {fileID: 0}
+  controller: {fileID: 0}
+  expBar: {fileID: 0}
   offset: {x: 0, y: 0.3, z: 0}
 --- !u!4 &6530765492508931012 stripped
 Transform:

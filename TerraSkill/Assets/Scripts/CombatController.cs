@@ -11,6 +11,7 @@ public class SwordCombat : MonoBehaviour
     public Transform swordTransform;  // Reference to the transform of the sword
     public EquipmentObject equippedWeapon;  // Reference to the equipped weapon
     private bool isAttacking = false;
+    public HealthController healthController;
 
     void Update()
     {
@@ -79,7 +80,7 @@ public class SwordCombat : MonoBehaviour
         {
             Debug.Log(hit);
             GameObject hitObject = hit.collider.gameObject;
-            HealthController healthController = hitObject.GetComponent<HealthController>();
+            healthController = hitObject.GetComponent<HealthController>();
 
             if (healthController != null)
             {
