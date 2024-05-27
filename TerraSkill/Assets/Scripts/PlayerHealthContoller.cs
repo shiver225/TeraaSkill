@@ -8,11 +8,13 @@ public class PlayerHealthContoller : MonoBehaviour
     public float regenerationRate = 5f; // Health regenerated per second
 
     public float currentHealth;
+    public bool IsDead;
 
     [SerializeField] PlayerHealthBar healthBar;
 
     private void Awake()
     {
+        IsDead = false;
         healthBar = GetComponent<MainPlayerController>().inventoryPanel.gameObject.transform.parent.GetComponentInChildren<PlayerHealthBar>();
     }
     void Start()
@@ -24,7 +26,7 @@ public class PlayerHealthContoller : MonoBehaviour
     void Update()
     {
         // Regenerate health over time
-        if (currentHealth < maxHealth)
+        if (currentHealth < maxHealth && !IsDead)
         {
             currentHealth += regenerationRate * Time.deltaTime;
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
@@ -47,8 +49,12 @@ public class PlayerHealthContoller : MonoBehaviour
 
     void Die()
     {
+        IsDead = false;
+        GetComponent<MainPlayerController>().deathPanel.SetActive(true);
         // Perform any death-related actions here
         Debug.Log("You died!");
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
         //Destroy(gameObject);
     }
 }

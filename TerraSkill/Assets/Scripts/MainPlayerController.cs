@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainPlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MainPlayerController : MonoBehaviour
     public InventoryObject inventoryEquipment;
     public GameObject inventoryPanel;
     public GameObject actionBoxPanel;
+    public GameObject deathPanel;
     public GameObject[] AllWeapons;
     public ItemDatabaseObject database;
     public MouseItem mouseItem = new MouseItem();
@@ -17,6 +19,7 @@ public class MainPlayerController : MonoBehaviour
     {
         inventoryPanel.SetActive(false);
         actionBoxPanel.SetActive(false);
+        deathPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -109,5 +112,10 @@ public class MainPlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    public void Respawn()
+    {
+        SceneManager.LoadScene(1);
+    }
 
 }
