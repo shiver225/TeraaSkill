@@ -34,7 +34,6 @@ public class EnemyScript : MonoBehaviour
             if(Vector3.Distance(player.position, transform.position) <= attackRange)
             {
                 animator.SetTrigger("attack");
-                PerformAttack();
                 timePassed = 0;
             }
         }
@@ -52,8 +51,9 @@ public class EnemyScript : MonoBehaviour
 
     void PerformAttack()
     {
+        Vector3 raycastOrigin = transform.position + Vector3.up * 1f;
         // Perform damage check
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, hitLayers);
+        RaycastHit[] hits = Physics.RaycastAll(raycastOrigin, transform.forward, attackRange, hitLayers);
         foreach (RaycastHit hit in hits)
         {
             // Deal damage to the collided object if it has a collider
@@ -63,6 +63,8 @@ public class EnemyScript : MonoBehaviour
                 ApplyDamage(hit.collider.gameObject);
             }
         }
+
+        Debug.DrawRay(raycastOrigin, transform.forward * attackRange, Color.red, 1f);
     }
 
     void ApplyDamage(GameObject obj)
