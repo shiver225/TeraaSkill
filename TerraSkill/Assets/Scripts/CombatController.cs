@@ -65,7 +65,7 @@ public class SwordCombat : MonoBehaviour
         float attackRange = (equippedWeapon != null) ? equippedWeapon.range + 0.2f : unarmedRange;
 
         // Calculate the origin for the raycast
-        Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
+        Vector3 raycastOrigin = transform.position + Vector3.up * 0.7f;
 
         // If the sword is equipped and it's in the right hand, use its position for the raycast
         if (equippedWeapon != null && swordTransform != null && IsSwordInRightHand())
@@ -100,6 +100,24 @@ public class SwordCombat : MonoBehaviour
     }
 
     bool IsSwordInRightHand()
+    {
+        // Check if the sword transform is a child of the right hand
+        if (swordTransform != null && swordTransform.IsChildOf(transform))
+        {
+            Transform parent = swordTransform.parent;
+            while (parent != null)
+            {
+                Debug.Log("Parent: " + parent.name); // Add this line for debugging
+                if (parent.name == "RhandWrapper")
+                {
+                    return true;
+                }
+                parent = parent.parent;
+            }
+        }
+        return false;
+    }
+    bool IsStaffInRightHand()
     {
         // Check if the sword transform is a child of the right hand
         if (swordTransform != null && swordTransform.IsChildOf(transform))

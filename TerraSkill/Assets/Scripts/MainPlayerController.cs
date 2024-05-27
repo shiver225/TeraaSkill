@@ -92,7 +92,7 @@ public class MainPlayerController : MonoBehaviour
     {
         GameObject playerObject = GameObject.FindWithTag("Player");
 
-        Vector3 spawnPosition = playerObject.transform.position + new Vector3(0f, 1f, 0f);
+        Vector3 spawnPosition = playerObject.transform.position + new Vector3(0f, 0.4f, 0f);
         GameObject newWeaponInstance = Instantiate(weaponObject);
         newWeaponInstance.transform.position = spawnPosition;
         newWeaponInstance.transform.rotation = Quaternion.identity;

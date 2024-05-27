@@ -51,7 +51,7 @@ public class EnemyScript : MonoBehaviour
 
     void PerformAttack()
     {
-        Vector3 raycastOrigin = transform.position + Vector3.up * 1f;
+        Vector3 raycastOrigin = transform.position + Vector3.up * 0.7f;
         // Perform damage check
         RaycastHit[] hits = Physics.RaycastAll(raycastOrigin, transform.forward, attackRange, hitLayers);
         foreach (RaycastHit hit in hits)

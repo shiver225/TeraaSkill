@@ -49,7 +49,7 @@ public class PlayerHealthContoller : MonoBehaviour
 
     void Die()
     {
-        IsDead = false;
+        IsDead = true;
         GetComponent<MainPlayerController>().deathPanel.SetActive(true);
         // Perform any death-related actions here
         Debug.Log("You died!");
